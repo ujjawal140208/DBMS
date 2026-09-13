@@ -1,0 +1,353 @@
+-- CREATE database college_db
+-- use college_db
+-- CREATE TABLE Department (
+--     department_id INT PRIMARY KEY,
+--     department_name VARCHAR(50),
+--     location VARCHAR(50)
+-- );
+-- INSERT INTO Department
+-- (department_id, department_name, location)
+-- VALUES
+-- (1, 'Computer Science', 'Delhi'),
+-- (2, 'Electronics', 'Mumbai'),
+-- (3, 'Mechanical', 'Pune'),
+-- (4, 'Civil', 'Jaipur'),
+-- (5, 'Information Technology', 'Bangalore'),
+-- (6, 'Electrical', 'Chennai');
+-- CREATE TABLE Student (
+--     student_id INT PRIMARY KEY,
+--     student_name VARCHAR(50),
+--     department_id INT,
+--     age INT,
+--     FOREIGN KEY (department_id)
+--         REFERENCES Department(department_id)
+-- );
+-- INSERT INTO Student
+-- (student_id, student_name, department_id, age)
+-- VALUES
+-- (101, 'Rahul', 1, 20),
+-- (102, 'Priya', 1, 21),
+-- (103, 'Aman', 2, 20),
+-- (104, 'Neha', 3, 22),
+-- (105, 'Rohan', 1, 21),
+-- (106, 'Simran', NULL, 20),
+-- (107, 'Arjun', 2, 22),
+-- (108, 'Karan', 5, 21);
+-- CREATE TABLE Course (
+--     course_id INT PRIMARY KEY,
+--     course_name VARCHAR(50),
+--     department_id INT,
+--     FOREIGN KEY (department_id)
+--         REFERENCES Department(department_id)
+-- );
+-- INSERT INTO Course
+-- (course_id, course_name, department_id)
+-- VALUES
+-- (201, 'DBMS', 1),
+-- (202, 'Data Structures', 1),
+-- (203, 'Operating Systems', 1),
+-- (204, 'Digital Electronics', 2),
+-- (205, 'Thermodynamics', 3),
+-- (206, 'Computer Networks', 5),
+-- (207, 'Machine Design', 3),
+-- (208, 'Engineering Drawing', 4);
+-- CREATE TABLE Enrollment (
+--     enrollment_id INT PRIMARY KEY,
+--     student_id INT,
+--     course_id INT,
+--     marks INT,
+--     FOREIGN KEY (student_id)
+--         REFERENCES Student(student_id),
+--     FOREIGN KEY (course_id)
+--         REFERENCES Course(course_id)
+-- );
+-- INSERT INTO Enrollment
+-- (enrollment_id, student_id, course_id, marks)
+-- VALUES
+-- (1, 101, 201, 85),
+-- (2, 101, 202, 78),
+-- (3, 101, 203, 92),
+
+-- (4, 102, 201, 76),
+-- (5, 102, 202, 88),
+
+-- (6, 103, 204, 67),
+
+-- (7, 104, 205, 35),
+
+-- (8, 105, 201, 95),
+-- (9, 105, 202, 91),
+
+-- (10, 107, 204, 82),
+-- (11, 108, 206, 74);
+-- CREATE TABLE Employee (
+--     emp_id INT PRIMARY KEY,
+--     emp_name VARCHAR(50),
+--     manager_id INT
+-- );
+-- INSERT INTO Employee
+-- (emp_id, emp_name, manager_id)
+-- VALUES
+-- (1, 'Raj', NULL),
+-- (2, 'Amit', 1),
+-- (3, 'Priya', 1),
+-- (4, 'Neha', 2),
+-- (5, 'Karan', 2);
+
+-- SELECT * FROM Department;
+-- SELECT * FROM Student;
+-- SELECT * FROM Course;
+-- SELECT * FROM Enrollment;
+-- SELECT * FROM Employee;
+
+-- Q1 ->
+-- SELECT s.student_name, d.department_name
+-- FROM Student s
+-- INNER JOIN Department d
+-- ON s.department_id = d.department_id;
+
+-- Q2 ->
+-- SELECT s.student_name, d.location
+-- FROM Student s
+-- LEFT JOIN Department d
+-- ON s.department_id = d.department_id;
+
+-- Q3 ->
+-- SELECT c.course_name, d.department_name
+-- FROM Course c
+-- INNER JOIN Department d
+-- ON c.department_id = d.department_id;
+
+-- Q4 ->
+-- SELECT s.student_name, c.course_name, e.marks
+-- FROM Student s
+-- JOIN Enrollment e
+-- ON s.student_id = e.student_id
+-- JOIN Course c
+-- ON e.course_id = c.course_id;
+
+-- Q5 ->
+-- SELECT s.student_name, c.course_name
+-- FROM Student s
+-- JOIN Enrollment e
+-- ON s.student_id = e.student_id
+-- JOIN Course 
+-- ON e.course_id = c.course_id;
+
+-- Q6 ->
+-- SELECT s.student_name, d.department_name
+-- FROM Student s
+-- INNER JOIN Department d
+-- ON s.department_id = d.department_id;
+
+-- Q7 -> 
+-- SELECT s.student_name
+-- FROM Student s
+-- INNER JOIN Department d
+-- ON s.department_id = d.department_id
+-- WHERE d.department_name = 'Computer Science';
+
+-- Q8 ->
+-- SELECT s.student_name, c.course_name, e.marks
+-- FROM Student s
+-- INNER JOIN Enrollment e
+-- ON s.student_id = e.student_id
+-- INNER JOIN Course c
+-- ON e.course_id = c.course_id;
+
+-- Q9 ->
+-- SELECT d.department_name, s.student_name
+-- FROM Department d
+-- INNER JOIN Student s
+-- ON d.department_id = s.department_id
+-- ORDER BY d.department_name;
+
+-- Q10 ->
+-- SELECT s.student_name, d.department_name
+-- FROM Student s
+-- LEFT JOIN Department d
+-- ON s.department_id = d.department_id;
+
+-- Q11 ->
+-- SELECT s.student_name
+-- FROM Student s
+-- LEFT JOIN Enrollment e
+-- ON s.student_id = e.student_id
+-- WHERE e.student_id IS NULL;
+
+-- Q12 ->
+-- SELECT d.department_name, s.student_name
+-- FROM Department d
+-- LEFT JOIN Student s
+-- ON d.department_id = s.department_id;
+
+-- Q13 -> 
+-- SELECT c.course_name, e.student_id
+-- FROM Course c
+-- LEFT JOIN Enrollment e
+-- ON c.course_id = e.course_id;
+
+-- Q14 ->
+-- SELECT d.department_name, s.student_name
+-- FROM Student s
+-- RIGHT JOIN Department d
+-- ON s.department_id = d.department_id;
+
+-- Q15 -> 
+-- SELECT c.course_name, s.student_name
+-- FROM Enrollment e
+-- RIGHT JOIN Course c
+-- ON e.course_id = c.course_id
+-- LEFT JOIN Student s
+-- ON e.student_id = s.student_id;
+
+-- Q16 ->
+-- SELECT s.student_name,
+--        d.department_name,
+--        c.course_name,
+--        e.marks
+-- FROM Student s
+-- JOIN Department d
+-- ON s.department_id = d.department_id
+-- JOIN Enrollment e
+-- ON s.student_id = e.student_id
+-- JOIN Course c
+-- ON e.course_id = c.course_id;
+
+-- Q17 -> 
+-- SELECT s.student_name,
+--        d.location,
+--        c.course_name
+-- FROM Student s
+-- JOIN Department d
+-- ON s.department_id = d.department_id
+-- JOIN Enrollment e
+-- ON s.student_id = e.student_id
+-- JOIN Course c
+-- ON e.course_id = c.course_id;
+-- Q18 ->
+-- SELECT c.course_name,
+--        AVG(e.marks) AS average_marks
+-- FROM Course c
+-- JOIN Enrollment e
+-- ON c.course_id = e.course_id
+-- GROUP BY c.course_name;
+
+-- Q19 ->
+-- SELECT d.department_name,
+--        COUNT(s.student_id) AS number_of_students
+-- FROM Department d
+-- LEFT JOIN Student s
+-- ON d.department_id = s.department_id
+-- GROUP BY d.department_name;
+
+-- Q20 ->
+-- SELECT d.department_name,
+--        c.course_name,
+--        COUNT(e.student_id) AS students_enrolled
+-- FROM Department d
+-- JOIN Course c
+-- ON d.department_id = c.department_id
+-- LEFT JOIN Enrollment e
+-- ON c.course_id = e.course_id
+-- GROUP BY d.department_name, c.course_name;
+
+-- Q21 ->
+-- SELECT c.course_name, s.student_name, e.marks
+-- FROM Course c
+-- JOIN Enrollment e
+-- ON c.course_id = e.course_id
+-- JOIN Student s
+-- ON e.student_id = s.student_id
+-- WHERE e.marks = (
+--     SELECT MAX(e2.marks)
+--     FROM Enrollment e2
+--     WHERE e2.course_id = e.course_id
+-- );
+
+-- Q22 ->
+-- SELECT d.department_name
+-- FROM Department d
+-- LEFT JOIN Student s
+-- ON d.department_id = s.department_id
+-- WHERE s.student_id IS NULL;
+
+-- Q23 ->
+-- SELECT c.course_name
+-- FROM Course c
+-- LEFT JOIN Enrollment e
+-- ON c.course_id = e.course_id
+-- WHERE e.enrollment_id IS NULL;
+
+-- Q24 ->
+-- SELECT d.department_name,
+--        COUNT(s.student_id) AS total_students
+-- FROM Department d
+-- LEFT JOIN Student s
+-- ON d.department_id = s.department_id
+-- GROUP BY d.department_name;
+
+-- Q25 -> 
+-- SELECT s.student_id,
+--        s.student_name,
+--        d.department_name,
+--        c.course_name,
+--        e.marks,
+--        CASE
+--            WHEN e.marks >= 40 THEN 'Pass'
+--            ELSE 'Fail'
+--        END AS result_status
+-- FROM Student s
+-- JOIN Department d
+-- ON s.department_id = d.department_id
+-- JOIN Enrollment e
+-- ON s.student_id = e.student_id
+-- JOIN Course c
+-- ON e.course_id = c.course_id;
+
+-- Q26 ->
+-- SELECT e.emp_name AS employee,
+--        m.emp_name AS manager
+-- FROM Employee e
+-- LEFT JOIN Employee m
+-- ON e.manager_id = m.emp_id;
+
+-- Q27 Departments having more than 5 students
+-- SELECT d.department_name,
+--        COUNT(s.student_id) AS total_students
+-- FROM Department d
+-- JOIN Student s
+-- ON d.department_id = s.department_id
+-- GROUP BY d.department_name
+-- HAVING COUNT(s.student_id) > 5;
+
+-- Q28 ->
+-- SELECT DISTINCT e1.marks
+-- FROM Enrollment e1
+-- JOIN Enrollment e2
+-- ON e1.marks < e2.marks
+-- ORDER BY e1.marks DESC
+-- LIMIT 1;
+
+-- Q29 ->
+-- SELECT s.student_name,
+--        COUNT(e.course_id) AS total_courses
+-- FROM Student s
+-- JOIN Enrollment e
+-- ON s.student_id = e.student_id
+-- GROUP BY s.student_id, s.student_name
+-- HAVING COUNT(e.course_id) > 1;
+
+-- Q30 ->
+-- SELECT d.department_name,
+--        s.student_name,
+--        c.course_name,
+--        e.marks
+-- FROM Department d
+-- JOIN Student s
+-- ON d.department_id = s.department_id
+-- JOIN Enrollment e
+-- ON s.student_id = e.student_id
+-- JOIN Course c
+-- ON e.course_id = c.course_id
+-- ORDER BY d.department_name, s.student_name;
